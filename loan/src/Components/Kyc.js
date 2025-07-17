@@ -13,7 +13,7 @@ function Kyc(){
 
     let[kyc,setkyc]=useState({
         bank:"",
-        acc_no:0,
+        accno:0,
         address:""
     });
     function handlechange(e){
@@ -25,23 +25,24 @@ function Kyc(){
         console.log(user);
         
         try{
-        let k=await axios.post(`https://loanapp-4ios.onrender.com/AddKyc?id=${user.id}`,kyc)
-        if(k.data){
-            alert("Kyc verified")
+        let k=await axios.post(`http://localhost:8080/AddKyc?id=${user.id}`,kyc)
+            console.log(k.data);
+            alert("kyc verified")
             dispatch(LoginMe(true,k.data))
-            Navigate('/');
-
-        }
+            Navigate('/')
     }
-    catch{
-        console.log("something went wrong");
+    catch(error){
+       if(error.response){
+        alert(error.response.data)
+       }
+       alert("axios err..")
     }
 
     }
     return(
         <form onSubmit={handleSubmit}>
             <input name="bank" type="text" value={kyc.bank} placeholder="Enter the Bank name" onChange={handlechange} required></input>
-            <input name="acc_no" type="number" value={kyc.acc_no} placeholder="Enter the Acoount number" onChange={handlechange} minLength={13} required></input>
+            <input name="accno" type="number" value={kyc.accno} placeholder="Enter the Acoount number" onChange={handlechange} minLength={13} required></input>
             <input name="address" type="text" value={kyc.address} placeholder="Enter your address" onChange={handlechange} required></input>
             <button>Verify</button>
         </form>

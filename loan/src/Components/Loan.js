@@ -22,42 +22,21 @@ function Loan(){
     async function handleapply(){
         if(amount===0){return;}
         try{
-        let res=await axios.post("https://loanapp-4ios.onrender.com/ApplyLoan",null,{
+        let res=await axios.post("http://localhost:8080/ApplyLoan",null,{
             params:{
                 id:user.id,
                 amount:amount
             }
         });
         console.log(res.data);
-        if(res.data){
-            alert("loan applied")
-            try{
-            let state=await axios.get("https://loanapp-4ios.onrender.com/GetUser",{
-                params:{
-                    id:user.id
-                }
-            })
-            console.log(state.data);
-            dispatch(LoginMe(true,state.data));
+        dispatch(LoginMe(true,res.data))
+
         }
-        catch{
-            console.log("cant get the user");
-        }
-        }
-        else{
-            alert(`problem${res.data}`)
-        }
-    
-    }
-    catch{
-        alert("something err..")
+    catch(err){
+        alert(err.response.data)
     }
 
     }
-        useEffect(() => {
-  console.log("Updated amount:", amount);
-  console.log("updated limit:",limit);
-}, []);
 
     return(
         

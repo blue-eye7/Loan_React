@@ -25,20 +25,19 @@ function Login(){
         let verifydata=send?{email:form.eMob,pass:form.pass}:{mobile:form.eMob,pass:form.pass}
         console.log(verifydata);
         try{
-        let verifiy=await axios.post("https://loanapp-4ios.onrender.com/Login",verifydata)
-        if(verifiy.data){
+        let verifiy=await axios.post("http://localhost:8080/Login",verifydata)
             console.log(verifiy.data);
             dispatch(LoginMe(true,verifiy.data) )
             Navigate("/")
-            console.log(verifiy.data);
+        
         }
-        else{
-            console.log("error");
-            alert("use correct email and password")
-        }
-        }
-        catch{
-            console.log("err..");
+        catch(err){
+            if(err.response){
+                alert(`error${err.response.data}`);
+            }
+            else{
+                console.log("axios err...");
+            }
         }
 
     }

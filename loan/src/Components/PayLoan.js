@@ -27,19 +27,21 @@ export default function PayLoan() {
       return;
     }
     try{
-    let res=await axios.post("https://loanapp-4ios.onrender.com/PayLoan",null,{
+    let res=await axios.post("http://localhost:8080/PayLoan",null,{
       params:{
         loanid:params.loanid,
-        amount:amount
+        amount:amount,
+        userid:params.userid
       }
     })
-    if(res.data){
+      console.log(res.data);
+      alert("loan paid:",enteredAmount)
       dispatch(LoginMe(true,res.data))
       Navigate('/GetLoan')
     }
-    console.log(res.data);
-  }
-    catch{
+ 
+
+   catch{
       console.log("err");
     }
 
@@ -59,7 +61,7 @@ export default function PayLoan() {
       />
       <button onClick={handlepay}>Pay</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <button onClick={()=>{Navigate('/home')}}>Home</button>
+      <button onClick={()=>{Navigate('/')}}>Home</button>
     </>
   );
 }

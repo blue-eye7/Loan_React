@@ -12,7 +12,7 @@ function Signup(){
         pass:'',
         rpass:'',
         email:'',
-        mobile:'',
+        mobile:0,
         gender:''
     }
     let[formdata,setformdata]=useState(initialdata)
@@ -20,64 +20,47 @@ function Signup(){
 
     function handlechange(d){
         let {type,name,value}=d.target;
-        if(type==="select-one"){
-            setformdata({...formdata,[name]:value})
-        }
-        else{
-          let formerror=  Validateform(name,value,formdata)
-          setformdata({...formdata,[name]:value})
-          seterror({...error,[name]:formerror})
-        }
+           if (type === "tel" && name === "mobile") {
+        value = value.replace(/\D/g, ''); // remove non-digits
+        setformdata({ ...formdata, [name]: Number(value) }); // 👈 convert to number
+    } else if (type === "select-one") {
+        setformdata({ ...formdata, [name]: value });
+    } else {
+        let formerror = Validateform(name, value, formdata);
+        setformdata({ ...formdata, [name]: value });
+        seterror({ ...error, [name]: formerror });
+    }
     }
     async function handlesubmit(e){
         e.preventDefault();
         console.log(formdata);
-        if (Object.values(error).some((er) => er)) { alert("enter correct details")
-      return;}
-            let emailVer;
-            let mobileVer;
-            try{
-                emailVer=await axios.get("https://loanapp-4ios.onrender.com/Validateemail",{
-                    params:{
-                        email:formdata.email,
-                       
-                    }
-                })
-                mobileVer=await axios.get("https://loanapp-4ios.onrender.com/Validatemobile",{
-                    params:{
-                        mobile:formdata.mobile,
-                       
-                    }
-                })
-            }
-            catch{
-                alert("something wrong...")
-                return;
-            }
-            if(emailVer.data && mobileVer.data){storedetails() ; Navigate("/Login");}
-            else{
-                if(!emailVer){
-                    seterror({...error,email:"email already found"})
-                }
-                else{
-                    seterror({...error,mobile:"mobile no already found"})
-                }
-                return;
-            }
+        if (Object.values(error).some((er) => er))
+        { 
+            alert("enter correct details")
+            return;
+        }
+        let response;
+        try{
+         response=await axios.post("http://localhost:8080/AddUser",formdata,{headers:{"Content-Type":"application/json"}});
+        console.log(response.data);
+        Navigate('/Login')
+    }
+   catch (error) {
+    if (error.response) {
+
+        
+        alert(`Error: ${error.response.data}`);
+    }  else {
+       return;
+    }
+}
+
+ }
         
     
         
-        }
-       async function storedetails(){
-            try{
-               let response= await axios.post("https://loanapp-4ios.onrender.com/AddUser",formdata)
-               console.log(response);
-            }
-            catch{
-                console.log("error..");
-            }
-           
-        }
+        
+       
 
 
         return(

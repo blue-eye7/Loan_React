@@ -21,7 +21,7 @@ function App() {
         <Route path='/Kyc' element={<Kyc/>}/>
         <Route path='/Loan' element={<Loan/>}></Route>
         <Route path='/GetLoan' element={<GetLoan/>}/>
-         <Route path='/PayLoan/:loanid/:userid/:balance' element={<PayLoan/>}/>
+         <Route path='/PayLoan/:loanid/:userid/:balance/:userid' element={<PayLoan/>}/>
          <Route path='/PaidLoan' element={<PaidLoans/>}/>
 
 
