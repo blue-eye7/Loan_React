@@ -52,7 +52,9 @@ function Home(){
            { Authed&&<>
            {!user.userdata.kyc &&<button onClick={()=>Navigate('/Kyc')}>Add Kyc dteails</button>}
            <button onClick={()=>Navigate('/GetLoan')}>My Loans</button>
-           <button onClick={()=>Navigate('/PaidLoan')}>Completed</button></>}
+           <button onClick={()=>Navigate('/PaidLoan')}>Completed</button>
+           <button onClick={()=>Navigate('/Transaction')}>My transaction</button></>
+           }
         </div>
          </>
     )

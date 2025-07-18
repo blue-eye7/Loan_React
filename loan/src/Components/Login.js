@@ -17,18 +17,22 @@ function Login(){
 
     function handlechange(e){
         let {name,value}=e.target
-        setForm({...form,[name]:value})
+        setForm({...form,[name]:value.trim()})
     }
     async function handlesubmit(e){
         e.preventDefault()
+        if(form.eMob&&form.pass){
         let send=form.eMob.includes('@')
         let verifydata=send?{email:form.eMob,pass:form.pass}:{mobile:form.eMob,pass:form.pass}
         console.log(verifydata);
         try{
         let verifiy=await axios.post("http://localhost:8080/Login",verifydata)
             console.log(verifiy.data);
+            const confirmed = window.confirm("Are you sure you want to log in?");
+            if(confirmed){
             dispatch(LoginMe(true,verifiy.data) )
-            Navigate("/")
+            Navigate("/")}
+            return;
         
         }
         catch(err){
@@ -38,6 +42,9 @@ function Login(){
             else{
                 console.log("axios err...");
             }
+        }}
+        else{
+            alert("field cannot be empty");
         }
 
     }

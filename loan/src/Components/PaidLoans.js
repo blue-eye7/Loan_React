@@ -1,14 +1,16 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 export default function PaidLoans(){
 
 
     let user=useSelector(state=>state.LoginReducer.userdata);
+    let Navigate=useNavigate()
 
 
     return(
-
+<>
         <table border={1}>
             <thead>
                 <tr>
@@ -27,6 +29,8 @@ export default function PaidLoans(){
                 )}
             </tbody>
         </table>
+         <button onClick={()=>Navigate('/')}>Home</button>
+    </>
     )
 
 

@@ -33,11 +33,12 @@ function GetLoan(){
             <h1>paid:{e.paid}</h1>
             <h1>Balance :{e.balance}</h1>
             <button onClick={()=>handlepay(e.id,e.balance)}>Pay Loan</button>
-            <button onClick={()=>Navigate('/')}>Home</button>
+           
 
 
             </div>)
         }
+         <button onClick={()=>Navigate('/')}>Home</button>
         
         
         </div>}

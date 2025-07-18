@@ -9,6 +9,7 @@ import Loan from './Components/Loan';
 import GetLoan from './Components/GetLoans';
 import PayLoan from './Components/PayLoan';
 import PaidLoans from './Components/PaidLoans';
+import Transaction from './Components/Transaction';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path='/GetLoan' element={<GetLoan/>}/>
          <Route path='/PayLoan/:loanid/:userid/:balance/:userid' element={<PayLoan/>}/>
          <Route path='/PaidLoan' element={<PaidLoans/>}/>
+         <Route path='/Transaction' element={<Transaction/>}/>
 
 
         
